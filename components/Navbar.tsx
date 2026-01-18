@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Page } from '../types';
 import { Menu, X, Rocket } from 'lucide-react';
@@ -15,8 +16,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage }) => {
 
   const navItems: { label: string; value: Page }[] = [
     { label: 'Home', value: 'home' },
-    { label: 'The Strategist', value: 'about' },
-    { label: 'Toolkit', value: 'services' },
+    { label: 'About', value: 'about' },
+    { label: 'Services', value: 'services' },
     { label: 'Contact', value: 'contact' }
   ];
 
@@ -55,7 +56,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage }) => {
               className="bg-gradient-to-r from-[#2d1b10] to-[#4a2d1b] text-[#fdfaf6] px-6 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest hover:brightness-110 transition-all flex items-center gap-2 shadow-lg shadow-[#2d1b10]/10"
             >
               <Rocket size={14} />
-              Analyze My Strategy
+              Strategic Audit
             </button>
           </div>
 
@@ -111,7 +112,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentPage, setPage }) => {
               className="w-full bg-gradient-to-r from-[#2d1b10] to-[#4a2d1b] text-[#fdfaf6] px-6 py-5 rounded-2xl text-sm font-black uppercase tracking-[0.3em] shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-3"
             >
               <Rocket size={18} />
-              Analyze My Strategy
+              Strategic Audit
             </button>
           </div>
         </div>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Mail, MapPin, Phone, Instagram, Linkedin, Twitter } from 'lucide-react';
 
@@ -41,7 +42,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center space-x-3 text-sm text-[#8e6e53]">
                 <Phone size={18} className="text-[#b48c48] shrink-0" />
-                <span className="font-light">+91 (Direct Inquiry)</span>
+                <span className="font-light">+91 91406 00000</span>
               </li>
               <li className="flex items-center space-x-3 text-sm text-[#8e6e53]">
                 <Mail size={18} className="text-[#b48c48] shrink-0" />

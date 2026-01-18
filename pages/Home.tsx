@@ -73,6 +73,30 @@ const Home: React.FC<HomeProps> = ({ setPage }) => {
   const testimonialScrollRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
+  // Refined Scroll Reveal Observer
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.15, // Trigger slightly later for a more intentional feel
+      rootMargin: '0px 0px -80px 0px' // Offset to ensure user has scrolled a bit into the section
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          // Optionally stop observing once visible for performance
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const elements = document.querySelectorAll('.reveal-on-scroll');
+    elements.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({
@@ -105,7 +129,7 @@ const Home: React.FC<HomeProps> = ({ setPage }) => {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center pt-10 overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center pt-10 overflow-hidden reveal-on-scroll">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="flex flex-col">
@@ -175,7 +199,7 @@ const Home: React.FC<HomeProps> = ({ setPage }) => {
       </section>
 
       {/* Trust Bar */}
-      <section className="py-20 border-y border-[#8e6e53]/10 bg-white/30 backdrop-blur-sm">
+      <section className="py-20 border-y border-[#8e6e53]/10 bg-white/30 backdrop-blur-sm reveal-on-scroll">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
            <p className="text-center text-[10px] uppercase font-black tracking-[0.4em] text-[#8e6e53] mb-12">Recognized Strategic Authority</p>
            <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-40 grayscale hover:grayscale-0 transition-all duration-700">
@@ -187,10 +211,10 @@ const Home: React.FC<HomeProps> = ({ setPage }) => {
       </section>
 
       {/* Methodology Section */}
-      <section className="py-32 bg-white relative overflow-hidden">
+      <section className="py-32 bg-white relative overflow-hidden reveal-on-scroll">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-            <div>
+            <div className="reveal-content">
               <div className="inline-block bg-[#f5f1e9] px-4 py-1.5 rounded-full text-[#b48c48] text-[10px] font-black uppercase tracking-widest mb-8 border border-[#b48c48]/10">
                 The Methodology
               </div>
@@ -240,7 +264,7 @@ const Home: React.FC<HomeProps> = ({ setPage }) => {
       </section>
 
       {/* Services Section */}
-      <section className="py-32 relative bg-[#f5f1e9]/30 overflow-hidden">
+      <section className="py-32 relative bg-[#f5f1e9]/30 overflow-hidden reveal-on-scroll">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-end mb-20">
             <div className="max-w-2xl">
@@ -304,7 +328,7 @@ const Home: React.FC<HomeProps> = ({ setPage }) => {
       </section>
 
       {/* Success Metrics */}
-      <section className="py-24 bg-[#2d1b10] text-[#fdfaf6]">
+      <section className="py-24 bg-[#2d1b10] text-[#fdfaf6] reveal-on-scroll">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
            <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
              {[
@@ -324,7 +348,7 @@ const Home: React.FC<HomeProps> = ({ setPage }) => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-32 bg-white">
+      <section className="py-32 bg-white reveal-on-scroll">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <div className="inline-block bg-[#f5f1e9] px-4 py-1.5 rounded-full text-[#2d1b10] text-[10px] font-black uppercase tracking-widest mb-6 border border-[#b48c48]/10">
@@ -356,7 +380,7 @@ const Home: React.FC<HomeProps> = ({ setPage }) => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-40 bg-[#fdfaf6] relative overflow-hidden">
+      <section className="py-40 bg-[#fdfaf6] relative overflow-hidden reveal-on-scroll">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-24">
             <h2 className="text-4xl md:text-7xl font-serif font-black text-[#2d1b10] mb-8">Voices of <span className="text-[#b48c48] italic font-normal text-[0.8em]">Alignment</span></h2>
@@ -401,7 +425,7 @@ const Home: React.FC<HomeProps> = ({ setPage }) => {
       </section>
 
       {/* Final Premium CTA */}
-      <section className="py-40">
+      <section className="py-40 reveal-on-scroll">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-[#2d1b10] rounded-[5rem] p-16 md:p-32 text-center relative overflow-hidden shadow-2xl">
              <div className="relative z-10">

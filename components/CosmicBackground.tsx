@@ -1,99 +1,167 @@
-import React, { useState, useEffect } from 'react';
+
+import React, { useState, useEffect, useRef } from 'react';
 
 const CosmicBackground: React.FC = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const requestRef = useRef<number>(null);
+  const targetMousePos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({
+      // Normalize position to -0.5 to 0.5 range
+      targetMousePos.current = {
         x: (e.clientX / window.innerWidth - 0.5),
         y: (e.clientY / window.innerHeight - 0.5),
-      });
+      };
     };
+
+    const animate = () => {
+      setMousePos(prev => ({
+        x: prev.x + (targetMousePos.current.x - prev.x) * 0.05,
+        y: prev.y + (targetMousePos.current.y - prev.y) * 0.05,
+      }));
+      requestRef.current = requestAnimationFrame(animate);
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    requestRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+    };
   }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden bg-[#fdfaf6]">
-      {/* Interactive Vedic Chart (Kundali) Pattern */}
+      {/* Interactive Global Glow - Follows Cursor */}
       <div 
-        className="absolute inset-0 opacity-[0.04] transition-transform duration-1000 ease-out"
+        className="absolute w-[100vw] h-[100vw] rounded-full bg-[#b48c48]/5 blur-[120px] mix-blend-multiply transition-opacity duration-1000"
         style={{ 
-          transform: `translate(${mousePos.x * 25}px, ${mousePos.y * 25}px) scale(1.05)` 
+          left: `calc(50% + ${mousePos.x * 100}px)`, 
+          top: `calc(50% + ${mousePos.y * 100}px)`,
+          transform: 'translate(-50%, -50%)'
+        }}
+      />
+
+      {/* Deep Layer: Stylized Nebula Glows */}
+      <div 
+        className="absolute top-[5%] left-[-10%] w-[70vw] h-[70vw] bg-[#e6dbd0]/30 rounded-full blur-[140px] opacity-60"
+        style={{ transform: `translate(${mousePos.x * -20}px, ${mousePos.y * -20}px)` }}
+      />
+      <div 
+        className="absolute bottom-[-15%] right-[-10%] w-[60vw] h-[60vw] bg-[#dfd3c3]/20 rounded-full blur-[120px] opacity-50"
+        style={{ transform: `translate(${mousePos.x * 15}px, ${mousePos.y * 15}px)` }}
+      />
+
+      {/* Layer 1: Sacred Geometry Grid (Deep Background) */}
+      <div 
+        className="absolute inset-0 opacity-[0.04]"
+        style={{ 
+          transform: `translate(${mousePos.x * 10}px, ${mousePos.y * 10}px) scale(1.05)` 
         }}
       >
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern id="vedic-kundali-grid" x="0" y="0" width="500" height="500" patternUnits="userSpaceOnUse">
-              <g stroke="#2d1b10" strokeWidth="0.8" fill="none">
-                {/* Square Frame */}
-                <rect x="50" y="50" width="400" height="400" />
-                {/* Diagonals */}
-                <path d="M50 50 L450 450 M450 50 L50 450" />
-                {/* Diamond Frame */}
-                <path d="M250 50 L450 250 L250 450 L50 250 Z" />
-                {/* Subtle Dots for Houses */}
-                <circle cx="250" cy="250" r="3" fill="#2d1b10" />
+            <pattern id="sacred-grid" x="0" y="0" width="400" height="400" patternUnits="userSpaceOnUse">
+              <g stroke="#2d1b10" strokeWidth="0.5" fill="none">
+                <circle cx="200" cy="200" r="180" opacity="0.5" />
+                <path d="M200 20 L200 380 M20 200 L380 200" opacity="0.3" />
+                <rect x="100" y="100" width="200" height="200" transform="rotate(45 200 200)" opacity="0.2" />
               </g>
-              <text x="250" y="45" fontSize="12" textAnchor="middle" fill="#8e6e53" opacity="0.6" fontFamily="serif">Jyotish Architecture</text>
             </pattern>
           </defs>
-          <rect width="100%" height="100%" fill="url(#vedic-kundali-grid)" />
+          <rect width="100%" height="100%" fill="url(#sacred-grid)" />
         </svg>
       </div>
-      
-      {/* Large Rotating Zodiac Mandala */}
+
+      {/* Layer 2: Major Celestial Bodies (Stylized Planets & Nodes) */}
       <div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vw] opacity-[0.08] transition-transform duration-[2s] ease-out"
+        className="absolute top-[20%] right-[15%] w-80 h-80 opacity-40"
+        style={{ transform: `translate(${mousePos.x * -60}px, ${mousePos.y * -60}px)` }}
+      >
+        <div className="relative w-full h-full animate-[spin_150s_linear_infinite]">
+          <div className="absolute inset-6 rounded-full bg-gradient-to-tr from-[#2d1b10]/80 via-[#8e6e53]/40 to-transparent blur-[2px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[1px] bg-gradient-to-r from-transparent via-[#b48c48]/30 to-transparent rotate-[35deg]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[1px] bg-gradient-to-r from-transparent via-[#8e6e53]/20 to-transparent rotate-[-15deg]" />
+        </div>
+      </div>
+
+      <div 
+        className="absolute bottom-[25%] left-[10%] w-56 h-56 opacity-30"
+        style={{ transform: `translate(${mousePos.x * 40}px, ${mousePos.y * 40}px)` }}
+      >
+        <div className="relative w-full h-full animate-[spin_200s_linear_infinite_reverse]">
+          <div className="absolute inset-4 rounded-full border border-[#b48c48]/20 shadow-[inset_0_0_30px_rgba(180,140,72,0.1)]" />
+          <div className="absolute top-[-10px] left-1/2 -translate-x-1/2 w-3 h-3 bg-[#b48c48]/40 rounded-full blur-[1px]" />
+        </div>
+      </div>
+      
+      {/* Layer 3: Rotating Zodiac Chart (Middle Ground) */}
+      <div 
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[130vw] h-[130vw] opacity-[0.07]"
         style={{ 
-          transform: `translate(calc(-50% + ${mousePos.x * 15}px), calc(-50% + ${mousePos.y * 15}px)) rotate(${mousePos.x * 8}deg)` 
+          transform: `translate(calc(-50% + ${mousePos.x * 30}px), calc(-50% + ${mousePos.y * 30}px)) rotate(${mousePos.x * 5}deg)` 
         }}
       >
-        <svg viewBox="0 0 1000 1000" className="w-full h-full animate-[spin_600s_linear_infinite]">
-          <circle cx="500" cy="500" r="480" fill="none" stroke="#8e6e53" strokeWidth="0.5" strokeDasharray="10 20" />
-          <circle cx="500" cy="500" r="400" fill="none" stroke="#b48c48" strokeWidth="0.3" />
-          {/* Zodiac Symbol Groups */}
+        <svg viewBox="0 0 1000 1000" className="w-full h-full animate-[spin_900s_linear_infinite]">
+          <circle cx="500" cy="500" r="490" fill="none" stroke="#2d1b10" strokeWidth="0.2" strokeDasharray="2 10" />
+          <circle cx="500" cy="500" r="400" fill="none" stroke="#b48c48" strokeWidth="0.5" opacity="0.4" />
           {[...Array(12)].map((_, i) => (
             <g key={i} transform={`rotate(${i * 30} 500 500)`}>
-              <line x1="500" y1="500" x2="500" y2="20" stroke="#8e6e53" strokeWidth="0.2" opacity="0.3" />
-              <path d="M490 60 L500 40 L510 60 Z" fill="#b48c48" />
-              <circle cx="500" cy="100" r="15" fill="none" stroke="#b48c48" strokeWidth="0.5" />
+              <text x="500" y="45" fontSize="14" textAnchor="middle" fill="#8e6e53" opacity="0.6" fontFamily="serif" transform="rotate(-15 500 45)">❈</text>
+              <line x1="500" y1="500" x2="500" y2="60" stroke="#8e6e53" strokeWidth="0.1" opacity="0.3" />
             </g>
           ))}
         </svg>
       </div>
 
-      {/* Earthy Nebula / Energy Fields */}
+      {/* Layer 4: Celestial Dust & Stardust Particles (Fore Ground) */}
       <div 
-        className="absolute top-[-15%] right-[-15%] w-[900px] h-[900px] bg-[#dfd3c3]/40 rounded-full blur-[180px] transition-transform duration-[3s] ease-out"
-        style={{ transform: `translate(${mousePos.x * -100}px, ${mousePos.y * -100}px)` }} 
-      />
-      <div 
-        className="absolute bottom-[-20%] left-[-20%] w-[1200px] h-[1200px] bg-[#e6dbd0]/30 rounded-full blur-[200px] transition-transform duration-[4s] ease-out"
-        style={{ transform: `translate(${mousePos.x * 60}px, ${mousePos.y * 60}px)` }} 
-      />
-      
-      {/* Grounded Floating Particles */}
-      <div className="absolute inset-0">
-        {[...Array(40)].map((_, i) => (
+        className="absolute inset-0"
+        style={{ transform: `translate(${mousePos.x * 80}px, ${mousePos.y * 80}px)` }}
+      >
+        {[...Array(80)].map((_, i) => (
           <div
             key={i}
-            className="absolute rounded-full bg-[#8e6e53]/15"
+            className="absolute rounded-full"
             style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              width: `${Math.random() * 3 + 2}px`,
-              height: `${Math.random() * 3 + 2}px`,
-              animation: `pulse ${4 + Math.random() * 6}s infinite ease-in-out`,
-              opacity: Math.random() * 0.3 + 0.1
+              top: `${(i * 13.7) % 100}%`,
+              left: `${(i * 27.3) % 100}%`,
+              width: `${(i % 3) + 1.5}px`,
+              height: `${(i % 3) + 1.5}px`,
+              backgroundColor: i % 5 === 0 ? '#b48c48' : '#8e6e53',
+              boxShadow: i % 10 === 0 ? '0 0 10px #b48c48' : 'none',
+              animation: `pulse ${4 + (i % 5)}s infinite ease-in-out`,
+              opacity: 0.05 + (i % 4) * 0.05
             }}
           />
         ))}
       </div>
 
-      {/* Subtle Vertical Scroll Guide */}
-      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#8e6e53]/20 to-transparent hidden lg:block" />
+      {/* Layer 5: Slow Drifting "Wisps" */}
+      <div 
+        className="absolute inset-0"
+        style={{ transform: `translate(${mousePos.x * -40}px, ${mousePos.y * -40}px)` }}
+      >
+        {[...Array(6)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute bg-gradient-to-r from-transparent via-[#b48c48]/5 to-transparent blur-2xl"
+            style={{
+              top: `${(i * 20) + 10}%`,
+              left: `${(i * 15) % 100}%`,
+              width: '300px',
+              height: '1px',
+              transform: `rotate(${(i * 45)}deg)`,
+              opacity: 0.3
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Subtle Strategic Overlay (Vertical Axis) */}
+      <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-[#2d1b10]/10 to-transparent hidden lg:block" />
     </div>
   );
 };

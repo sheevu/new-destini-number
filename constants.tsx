@@ -4,35 +4,43 @@ import { Service, Testimonial } from './types';
 export const SERVICES: Service[] = [
   {
     id: 'name-correction',
-    title: 'Name & Signature Correction',
-    description: 'Personal Branding & Vibrational Alignment for the modern professional.',
-    longDescription: 'Optimize your personal brand by aligning your name vibration with your professional goals. We use Anka Shastra to ensure your signature carries the frequency of success.',
-    focus: 'Personal Branding & Vibrational Alignment',
-    icon: 'Edit3'
+    title: 'Identity Optimization (Name Correction)',
+    description: 'Vibrational engineering for your personal brand and signature.',
+    longDescription: 'In the corporate world, branding is everything. We apply Vedic Anka Shastra to audit your name. This isn\'t just about a change of letters; it\'s about aligning your name\'s compound frequency with your date of birth to eliminate invisible friction in leadership and social resonance.',
+    focus: 'Strategic Brand Alignment',
+    icon: 'Fingerprint'
+  },
+  {
+    id: 'signature-analysis',
+    title: 'Signature Strategy',
+    description: 'Your signature is your personal logotype and commitment frequency.',
+    longDescription: 'A signature is a roadmap of your sub-conscious confidence. We analyze stroke pressure, slant, and underline patterns to ensure your signature vibrates with authority, growth, and stability. A corrected signature acts as a daily affirmation of your professional intent.',
+    focus: 'Executive Presence',
+    icon: 'Zap'
   },
   {
     id: 'business-numerology',
-    title: 'Business Numerology',
-    description: 'Scaling, Profitability, and Launch Timing for MSMEs and Startups.',
-    longDescription: 'Treat your business name like a strategic asset. We analyze launch dates, brand names, and partnership compatibility to ensure long-term scalability.',
-    focus: 'Scaling, Profitability, and Launch Timing',
-    icon: 'Briefcase'
+    title: 'Market Scaling (Business Numerology)',
+    description: 'Launch timing and brand naming for startups and established MSMEs.',
+    longDescription: 'Choosing a company name or a product launch date shouldn\'t be a gamble. We provide a decision-making framework based on your business chart. We analyze partnership compatibility (synergy audits), brand name strength, and the "Profitability Windows" of your business cycle.',
+    focus: 'Capital & Growth Strategy',
+    icon: 'PieChart'
   },
   {
     id: 'career-alignment',
-    title: 'Career Alignment',
-    description: 'Using Life Path Numbers to choose the right professional trajectory.',
-    longDescription: 'Stop guessing. Use Vedic Numerology and Jyotish to identify if you are built for Engineering, Arts, or Business. Think of your birth chart as your factory settings.',
-    focus: 'Strategic Career Mapping',
-    icon: 'Compass'
+    title: 'Professional Mapping (Career Growth)',
+    description: 'Using Life Path Numbers to pivot or accelerate your professional climb.',
+    longDescription: 'Why fight your natural strengths? We treat your horoscope as a "Factory Settings" report. Whether you are in Sales, Tech, or Management, we identify the exact sectors where you will achieve the highest ROI on your effort, reducing the risk of burnout and stagnation.',
+    focus: 'Success-Path Optimization',
+    icon: 'Navigation'
   },
   {
-    id: 'crystal-protocols',
-    title: 'Crystal & Mantra Protocols',
-    description: 'Bio-hacking your energy field through grounded ancient science.',
-    longDescription: 'Forget superstition. We provide protocols designed to optimize your internal environment and energy field, similar to how an athlete optimizes their diet.',
-    focus: 'Bio-hacking Energy Optimization',
-    icon: 'Gem'
+    id: 'digital-vibration',
+    title: 'Digital & Asset Tuning',
+    description: 'Optimizing high-frequency assets like mobile numbers and accounts.',
+    longDescription: 'In a digital-first economy, your mobile number, bank accounts, and vehicle numbers are constant vibrational touchpoints. We calculate the "Strategic Resonance" of these assets to ensure they attract opportunities rather than repelling them through conflicting numbers.',
+    focus: 'Asset Resonance Audit',
+    icon: 'Shield'
   }
 ];
 
